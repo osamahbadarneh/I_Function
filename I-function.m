@@ -4,22 +4,7 @@
 function out = I_Func(an, An, AAn,ap, Ap, AAp, bm, Bm , BBm, bq, Bq, BBq, z,v)
 %vc = 0,1,2... to ensure convergence
 F = @(s)(GammaProd(bm,Bm,BBm,s).* GammaProd(1-an,-An,AAn,s).* z.^-s )./ (GammaProd(1-bq,-Bq,BBq,s).* GammaProd(ap,Ap,AAp,s));
-%% Contour preparation:
-% epsilon = 10^1.2;
-% Sups = min((1-an)./An); Infs = max(-bm./Bm);
-% if(isempty(Sups) && isempty(Infs))
-% WPx=1;
-% elseif(isempty(Sups) && ~isempty(Infs))
-% WPx = Infs +epsilon;
-% elseif(~isempty(Sups) && isempty(Infs))
-% WPx = Sups -epsilon;
-% else
-% WPx = (Sups + Infs)/1.35;% s between Sups and Infs
-% end
-% %% integration:
-% infity = 10;
-% out =real( (1/(2*1i*pi))*integral(F,WPx-1i*infity, WPx+1i*infity));
-% return
+
 %% Parameters:
 p = length([An Ap]);
 q = length([Bm Bq]);%length([An Ap]);%
@@ -52,7 +37,7 @@ elseif(isempty(Sups) && ~isempty(Infs))
 elseif(~isempty(Sups) && isempty(Infs))
     WPx = Sups -epsilon;
 else
-    WPx = (Sups+ Infs)/2 %WPx = (Sups+ Infs)/3.1; for OP cap  light WPx = (Sups+ Infs)/1.741  % mod thick cap WPx = (Sups+ Infs)/1.9741
+    WPx = (Sups+ Infs)/2; %WPx = (Sups+ Infs)/3.1; for OP cap  light WPx = (Sups+ Infs)/1.741  % mod thick cap WPx = (Sups+ Infs)/1.9741
     % BER light WPx = (Sups+ Infs)/12 % OP mod. WPx =0.1250
 end
 WayPoints = [WPx-1i*epsilon WPx+1i*epsilon];
